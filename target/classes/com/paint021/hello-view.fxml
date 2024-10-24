@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paint021.PaintController">
+    <children>
+      <BorderPane fx:id="borderPane" layoutX="20.0" layoutY="1.3333333333333333" onMouseEntered="#lockSize" prefHeight="745.0" prefWidth="1149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+         <top>
+             <VBox prefHeight="131.0" prefWidth="1141.0">
+            <MenuBar fx:id="menu" prefHeight="25.0" prefWidth="1069.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="openBtn" mnemonicParsing="false" onAction="#openImg" text="Open" />
+                        <MenuItem fx:id="saveBtn" mnemonicParsing="false" onAction="#saveImg" text="Save" accelerator="Shortcut + S"/>
+                        <MenuItem fx:id="saveAsBtn" mnemonicParsing="false" onAction="#saveAsImg" text="Save As" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem fx:id="addTabBtn" mnemonicParsing="false" onAction="#addTab" text="Add Tab" />
+                           <MenuItem fx:id="toggleSaveCounterBtn" mnemonicParsing="false" onAction="#toggleSaveCounter" text="Toggle Save Timer" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#openAbout" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#openHelp" text="Help" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+             <ToolBar prefHeight="101.0" prefWidth="1081.0">
+                 <items>
+                     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1122.0" spacing="15.0">
+                        <ToggleButton fx:id="selectTool" mnemonicParsing="false" onMouseClicked="#toggleBtnEnable">
+                           <graphic>
+                              <ImageView fitHeight="150.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../iconImage/selecticon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Drag to create selected area" />
+                           </tooltip>
+                        </ToggleButton>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <GridPane alignment="CENTER" gridLinesVisible="true">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="5.0" prefWidth="76.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Size: " />
+                                     <TextField fx:id="brushSize" prefHeight="25.0" prefWidth="65.0" text="18">
+                                       <tooltip>
+                                          <Tooltip text="Adjusts brush &amp; font size" />
+                                       </tooltip></TextField>
+                                 </children>
+                              </HBox>
+                               <ColorPicker fx:id="colorPicker" prefWidth="125.0" GridPane.columnIndex="1">
+                                 <value>
+                                    <Color />
+                                 </value>
+                                 <tooltip>
+                                    <Tooltip text="Changes color of paint" />
+                                 </tooltip>
+                              </ColorPicker>
+                               <ToggleButton fx:id="dashedLineTool" contentDisplay="CENTER" prefHeight="42.0" prefWidth="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/dashedicon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Makes all lines dashed" />
+                                 </tooltip>
+                              </ToggleButton>
+                              <ComboBox fx:id="fontDropdown" prefWidth="150.0" promptText="Arial" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <tooltip>
+                                    <Tooltip text="Changes Text Font" />
+                                 </tooltip></ComboBox>
+                           </children>
+                        </GridPane>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <GridPane gridLinesVisible="true">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                               <ToggleButton fx:id="paintTool" onMouseClicked="#toggleBtnEnable">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/paintbrushicon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="General paint tool" />
+                                 </tooltip></ToggleButton>
+                               <ToggleButton fx:id="eraser" onMouseClicked="#toggleBtnEnable" prefHeight="41.0" prefWidth="12.0" GridPane.columnIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/erasericon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="General eraser tool" />
+                                 </tooltip></ToggleButton>
+                              <Button fx:id="clearTool" mnemonicParsing="false" onMouseClicked="#clearCanvas" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/trashicon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Clears the canvas" />
+                                 </tooltip>
+                              </Button>
+                              <ToggleButton fx:id="textTool" mnemonicParsing="false" onMouseClicked="#toggleBtnEnable" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/texticon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Creates texts where clicked" />
+                                 </tooltip>
+                              </ToggleButton>
+                           </children>
+                        </GridPane>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <ScrollPane prefHeight="91.0" prefWidth="153.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="127.0">
+                                 <children>
+                                    <GridPane gridLinesVisible="true" prefHeight="117.0" prefWidth="123.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                           <ToggleButton fx:id="rectTool" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="2">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/rectangleicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="squareTool" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="1">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/squareicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="lineTool" onMouseClicked="#toggleBtnEnable">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/lineicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="triangleTool" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/triangleicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="rTriangleTool" onMouseClicked="#toggleBtnEnable" GridPane.rowIndex="2">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/righttriangleicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="ovalTool" onMouseClicked="#toggleBtnEnable" GridPane.rowIndex="1">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/ovalicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                           <ToggleButton fx:id="circleTool" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/circleicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="polygonTool" mnemonicParsing="false" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/polygonicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="hexagonTool" mnemonicParsing="false" onMouseClicked="#toggleBtnEnable" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <graphic>
+                                                <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/hexagonicon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="starTool" mnemonicParsing="false" onMouseClicked="#toggleBtnEnable" prefHeight="40.0" prefWidth="0.0" GridPane.rowIndex="3">
+                                             <graphic>
+                                                <ImageView fitHeight="33.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../iconImage/staricon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <Slider fx:id="sideSlider" max="50.0" min="4.0" onMouseClicked="#setSlideText" onMouseDragged="#setSlideText" orientation="VERTICAL">
+                           <tooltip>
+                              <Tooltip text="Adjusts the number of sides of polygon and star" />
+                           </tooltip></Slider>
+                        <Text fx:id="sideNumText" strokeType="OUTSIDE" strokeWidth="0.0" text="Sides: 4" wrappingWidth="54.07220458984375" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <GridPane gridLinesVisible="true" prefHeight="91.0" prefWidth="106.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button fx:id="leftRotateBtn" mnemonicParsing="false" onMouseClicked="#leftRotate">
+                                 <graphic>
+                                    <ImageView fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/leftRotateIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="rightRotateBtn" mnemonicParsing="false" onMouseClicked="#rightRotate" GridPane.columnIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/rightRotateIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="horzFlipBtn" mnemonicParsing="false" onMouseClicked="#horzFlip" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/horzFlipicon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="vertFlipBtn" mnemonicParsing="false" onMouseClicked="#vertFlip" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../iconImage/vertFlipicon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </GridPane>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Button fx:id="undoBtn" mnemonicParsing="false" onMouseClicked="#undo" >
+                           <graphic>
+                              <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../iconImage/undoicon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button fx:id="redoBtn" mnemonicParsing="false" onMouseClicked="#redo">
+                           <graphic>
+                              <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../iconImage/redoicon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Text fx:id="autoSaveCounter" strokeType="OUTSIDE" strokeWidth="0.0" text="Auto Save In: " visible="false" wrappingWidth="123.47003173828125" />
+                        <opaqueInsets>
+                           <Insets top="10.0" />
+                        </opaqueInsets>
+
+                     </HBox>
+                 </items>
+             </ToolBar>
+             </VBox>
+         </top>
+         <bottom>
+            <TabPane fx:id="tabPane" onMouseClicked="#setTab" prefHeight="41.0" prefWidth="1141.0" side="BOTTOM" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab fx:id="startTab" text="Untitled Tab 1" />
+              </tabs>
+            </TabPane>
+         </bottom>
+         <center>
+          <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <children>
+                  <Canvas fx:id="canvas" height="577.0" width="1127.0" />
+                  <Canvas fx:id="tempCanvas" height="572.0" width="1141.0" StackPane.alignment="CENTER">
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </Canvas>
+              </children>
+          </StackPane>
+         </center>
+
+      </BorderPane>
+        <Text fx:id="title" layoutX="67.0" layoutY="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pain(t)" wrappingWidth="294.45245361328125">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
